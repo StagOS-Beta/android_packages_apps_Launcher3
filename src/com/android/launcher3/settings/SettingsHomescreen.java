@@ -108,6 +108,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) { 
         switch (key) {
             case Utilities.KEY_SEARCH_RADIUS:
+            case Utilities.KEY_SHOW_HOTSEAT_BG:
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
                 break;
             default:
@@ -242,6 +243,12 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
     
                 case KEY_SUGGESTIONS:
                     return isAsiEnabled();
+                
+                case Utilities.KEY_SEARCH_RADIUS:
+                    return isGsaEnabled();
+
+                case Utilities.KEY_SHOW_HOTSEAT_BG:
+                    return isGsaEnabled();
     
                 default:
                     break;
