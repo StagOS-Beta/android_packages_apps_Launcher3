@@ -32,6 +32,7 @@ import com.android.launcher3.Utilities;
 import com.android.launcher3.allapps.BaseAllAppsAdapter.AdapterItem;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.views.ActivityContext;
+import com.android.launcher3.util.Themes;
 
 import java.util.ArrayList;
 
@@ -243,7 +244,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     @Override
     protected void updateHeaderScroll(int scrolledOffset) {
         super.updateHeaderScroll(scrolledOffset);
-        getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox);
+        if (!Themes.isThemedIconEnabled(getContext())) {
+          getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google);
+        } else {
+          getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google_themed);
+        }
         if (mSearchUiManager.getEditText() == null) {
             return;
         }
@@ -256,13 +261,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             bgVisible = false;
         }
         mSearchUiManager.setBackgroundVisibility(bgVisible, 1 - prog);
-    }
-
-    @Override
-    protected int getHeaderColor(float blendRatio) {
-        return ColorUtils.setAlphaComponent(
-                super.getHeaderColor(blendRatio),
-                (int) (mSearchContainer.getAlpha() * 255));
     }
 
     private void layoutBelowSearchContainer(View v, boolean includeTabsMargin) {
